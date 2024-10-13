@@ -1,0 +1,42 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+    <body>
+        <div class="row">
+            <h1 class="col-6 offset-3">SignUp On WanderLust</h1>
+            <div class="col-6 offset-3">
+                <form action="/signUp" method="post" class="needs-validation" novalidate>
+                    <div class="mt-2"><label for="username" class="form-label">username</label>
+                        <input type="text" name="username" placeholder="Add a username" class="form-control" id="username"
+                            required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                    </div>
+                    <div class="mt-2"><label for="e-mail" class="form-label">e-mail</label>
+                        <input type="email" name="email" placeholder="Add a email" class="form-control" id="email"
+                            required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please add email.
+                        </div>
+                    </div>
+                    <div class="mt-2"><label for="password" class="form-label">password</label>
+                        <input type="password" name="password" placeholder="type a password" class="form-control" id="password"
+                            required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                    </div>
+                    <div class="mt-2"><button class="btn btn-success btn-md active mt-2"
+                        style="background-color: #fe424d; border: none;" type="submit">ADD</button></div>
+            </div>
+        </div>
+    </body>

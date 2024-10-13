@@ -1,0 +1,79 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+    <body>
+        <div class="row">
+            <div class="col-8 offset-2">
+                <h1 class="mt-3">Edit :<%=listing.title%>
+                </h1>
+                <form action="/listings/<%=listing._id%>?_method=PUT" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+                    <div class="mt-2"><label for="title" class="form-label">Title</label>
+                        <input type="text" name="listing[title]" class="form-control" placeholder="write title"
+                            value="<%= listing.title %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please correct Title
+                        </div>
+                    </div>
+                    <div class="mt-2"><label for="description" class="form-label">Description</label>
+                        <textarea name="listing[description]" id="" class="form-control" placeholder="write description"
+                            rows="5" required><%= listing.description %></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a Description.
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <label for="image-link" class="form-label">preview Image</label>
+                        <img src="<%=originalImageUrl%>" alt="#" srcset="" class="max-w-75 max-h-75" height="220px" width="300px">
+                    </div>
+                    <div class="mt-2"><label for="image-link" class="form-label">upload new Image</label>
+                        <input type="file" name="listing[image]" placeholder="upload new image" class="form-control" >
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <div class="row">
+                            <div class="col-4"><label for="price" class="form-label ">Price</label>
+                                <input type="number" name="listing[price]" class="form-control"
+                                    placeholder="enter price" value="<%= listing.price %>" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please enter a Price.
+                                </div>
+                            </div>
+                            <div class="col-8"><label for="country" class="form-label ">Country</label>
+                                <input type="text" name="listing[country]" class="form-control" placeholder="country"
+                                    value="<%= listing.country %>" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please choose a Country.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2"><label for="location" class="form-label">Location</label>
+                        <input type="text" name="listing[location]" class="form-control" placeholder="location"
+                            value="<%= listing.location %>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a Location.
+                        </div>
+                    </div>
+                    <div class="mt-2"><button class="btn btn-dark btn-primary active mt-2"
+                            style="background-color: #fe424d; border: none;">Submit</button></div>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script src="/js/script.js"></script>

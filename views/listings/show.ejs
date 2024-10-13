@@ -1,0 +1,133 @@
+<% layout("./layouts/boilerplate.ejs") %>
+    <script src="https://apis.mappls.com/advancedmaps/api/<%= mapApiKey %>/map_sdk?v=3.0&layer=vector"></script>
+    <body>
+        <div class="row">
+            <div class="col-8 offset-2">
+                <h1 class="mt-3">Listing :<%=listing.title%>
+                </h1>
+                <div class="listing-card">
+                    <img src="<%=listing.image.url%>" class="card-img-top" style="height: 50vh;" alt="iamge link"><br>
+                    <p class="card-text fs-5 mt-1"><label for="owned by">Owned By:</label>
+                        <i>
+                            <%=listing.owner.username%>
+                        </i>
+                    </p>
+                    <div class="card-body">
+                        <p class="card-text fs-4 mt-1">
+                            <b>
+                                <%=listing.title%>
+                            </b>
+                        </p>
+                        <p class="card-text fs-5">
+                            <%=listing.description%>
+                        </p>
+                        <p class="card-text fs-5">&#8377;<%=listing.price.toLocaleString("en-IN")%></p>
+                        <p class="card-text fs-5">
+                            <%=listing.location%>
+                        </p>
+                        <p class="card-text fs-5">
+                            <%=listing.country%>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-btn offset-1">
+                    <%if(currUser && currUser._id.equals(listing.owner._id) ){%>
+                        <form action="/listings/<%= listing._id %>/edit" method="get" class="col-4 offset-2">
+                            <button class="btn btn-dark mt-1 "
+                                style="background-color: #fe424d; border: none;">Edit</button>
+                        </form>
+                        <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" class="col-4">
+                            <button class="btn btn-dark mt-1 " style="border: none;">Delete</button>
+                        </form>
+                        <%}%>
+                </div>
+                <hr>
+                <%if(currUser){%>
+                    <h4>Leave A Review</h4>
+                    <form action="/listings/<%=listing._id%>/reviews" method="post" class="mt-2 needs-validation"
+                        novalidate>
+                        <div class="col-6 mt-3">
+                            <label for="rating" class="form-label fs-5">Rating</label>
+                            <fieldset class="starability-slot">
+                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
+                                    checked aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                        </div>
+                        <div class="mt-3 col-8">
+                            <label for="comment" class="form-label">Comment</label>
+                            <textarea name="review[comment]" id="comment" rows="7" cols="15" class="form-control"
+                                required></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Write Correctly Something
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button class="btn btn-outline-dark" type="submit">Submit</button>
+                        </div>
+                    </form>
+                    <%}%>
+                        <%if(listing.reviews.length>0){%>
+                            <h4>old reviews are:</h4>
+                            <div class="row">
+                                <%for(review of listing.reviews){%>
+                                    <div class="card col-5 mb-2 ms-1">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@<%= review.author.username %>
+                                            </h5>
+                                            <p class="starability-result card-text fs-6" data-rating=<%=review.rating%>>
+                                            </p>
+                                            <p class="card-text">
+                                                <%=review.comment%>
+                                            </p>
+                                            <form
+                                                action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE"
+                                                method="post" class="mb-1">
+                                                <button class="btn btn-dark">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <%}%>
+                            </div>
+                            <%}%>
+                                <div id="map"></div>
+            </div>
+        </div>
+        <script>
+            window.onload = function () {
+                console.log("Window loaded");
+                loadMap();
+            };
+            var map, marker;
+
+            function loadMap() {
+                map = new mappls.Map('map', {
+                    center: [19.7947, 85.8241],
+                    zoomControl: true,
+                    location: true
+                });
+                marker = new mappls.Marker({
+                    map: map,
+                    position: {
+                        "lat": 19.7947,
+                        "lng": 85.8241
+                    },
+                    fitbounds: true,
+                    draggable: true,
+                    icon_url: 'https://apis.mapmyindia.com/map_v3/1.png'
+                });
+            }
+        </script>
+    </body>
